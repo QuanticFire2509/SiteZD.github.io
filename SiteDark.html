@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ж/Д Запчасти - Современный Магазин</title>
+    <style>
+        /* Основные стили для тёмной темы */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        /* Хедер с навигацией */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #1c2526, #2c3e50);
+            color: #e0e0e0;
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: linear-gradient(135deg, #2c3e50, #1c2526);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 50px;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .menu li a:hover {
+            color: #00b7eb;
+            transform: scale(1.1);
+        }
+
+        /* Герой-секция с параллаксом */
+        .hero {
+            height: 100vh;
+            background: url('https://i.ytimg.com/vi/nzjMO6wKjUU/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGBMgPyh_MA8=&rs=AOn4CLBI6DAnWSAaoYHy_tlVrVKD2TlvSQ') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.5s;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .btn {
+            background: #00b7eb;
+            color: #121212;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .btn:hover {
+            background: #0093c4;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Анимации */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Секция каталога с карточками */
+        .catalog {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background: #1c2526;
+        }
+
+        .catalog h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #00b7eb;
+            animation: fadeIn 1s ease;
+        }
+
+        .catalog-actions {
+            margin-bottom: 40px;
+        }
+
+        .full-catalog-btn {
+            background: #ff6f61;
+            color: #121212;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            animation: pulse 2s infinite;
+            display: inline-block;
+        }
+
+        .full-catalog-btn:hover {
+            background: #e55a4e;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #2c3e50;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+        }
+
+        .card.visible {
+            opacity: 1;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .card:nth-child(even).visible {
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00b7eb;
+        }
+
+        .card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #b0bec5;
+        }
+
+        /* О нас секция */
+        .about {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background: linear-gradient(135deg, #1c2526, #263238);
+        }
+
+        .about h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #00b7eb;
+            animation: fadeIn 1s ease;
+        }
+
+        .about p {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #b0bec5;
+            animation: fadeInUp 1s ease 0.5s;
+        }
+
+        /* Секция наш коллектив */
+        .team {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background: #1c2526;
+        }
+
+        .team h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #00b7eb;
+            animation: fadeIn 1s ease;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background: #2c3e50;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+        }
+
+        .team-member.visible {
+            opacity: 1;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .team-member:nth-child(even).visible {
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+
+        .team-member-content {
+            padding: 20px;
+        }
+
+        .team-member h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00b7eb;
+        }
+
+        .team-member p {
+            font-size: 16px;
+            color: #b0bec5;
+        }
+
+        /* Секция отзывы клиентов */
+        .reviews {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background: linear-gradient(135deg, #263238, #1c2526);
+        }
+
+        .reviews h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #00b7eb;
+            animation: fadeIn 1s ease;
+        }
+
+        .review {
+            background: #2c3e50;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .review.visible {
+            opacity: 1;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .review p {
+            font-size: 16px;
+            color: #b0bec5;
+            margin-bottom: 10px;
+        }
+
+        .review h4 {
+            font-size: 18px;
+            color: #00b7eb;
+        }
+
+        /* Секция новости и акции */
+        .news {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background: #1c2526;
+        }
+
+        .news h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #00b7eb;
+            animation: fadeIn 1s ease;
+        }
+
+        .news-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .news-item {
+            background: #2c3e50;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+        }
+
+        .news-item.visible {
+            opacity: 1;
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        .news-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .news-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00b7eb;
+        }
+
+        .news-content p {
+            font-size: 16px;
+            color: #b0bec5;
+            margin-bottom: 20px;
+        }
+
+        /* Контакты */
+        .contact {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background: #263238;
+        }
+
+        .contact h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #00b7eb;
+            animation: fadeIn 1s ease;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, textarea {
+            padding: 15px;
+            border: 1px solid #455a64;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #263238;
+            color: #e0e0e0;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #00b7eb;
+            box-shadow: 0 0 8px rgba(0, 183, 235, 0.3);
+            outline: none;
+        }
+
+        button {
+            background: #00b7eb;
+            color: #121212;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        button:hover {
+            background: #0093c4;
+            transform: scale(1.05);
+        }
+
+        /* Футер */
+        footer {
+            background: #1c2526;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        /* Responsive дизайн */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 18px; }
+            .cards, .team-members, .news-items { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="https://i.ibb.co/k2k6TyB0/train.png" alt="Логотип Ж/Д Запчасти">
+            </div>
+            <ul class="menu">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#catalog">Каталог</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#team">Наш коллектив</a></li>
+                <li><a href="#reviews">Отзывы</a></li>
+                <li><a href="#news">Новости</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Качественные Запчасти для Железных Дорог</h1>
+            <p>Современные решения для вашего транспорта. Надежность и инновации в каждом детале.</p>
+            <a href="#catalog" class="btn">Просмотреть Каталог</a>
+        </div>
+    </section>
+
+    <section id="catalog" class="catalog">
+        <h2>Наш Каталог</h2>
+        <div class="catalog-actions">
+            <a href="Katalog.html" class="full-catalog-btn">Весь каталог</a>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <img src="https://i.ibb.co/LdnwQqrF/koleso.png" alt="Колесо цельнокатное">
+                <div class="card-content">
+                    <h3>Колесо цельнокатное</h3>
+                    <p>Высокотехнологичные колеса для безопасного движения.</p>
+                    <a href="#" class="btn">Подробнее</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://zdbz.ru/img/photos/0DAA5872-CD2E-452A-9244-03E7E79BD03F.jpg" alt="Колесные пары">
+                <div class="card-content">
+                    <h3>Колесные Пары</h3>
+                    <p>Прочные и долговечные колеса для интенсивной эксплуатации.</p>
+                    <a href="#" class="btn">Подробнее</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.satom.ru/i3/firms/28/5544/5544459/rama-bokovaya-100-00-020-4sb_fd810f7d51f9c0d_1024x3000.webp.jpg" alt="Боковая рама">
+                <div class="card-content">
+                    <h3>Боковая рама</h3>
+                    <p>Ключевой элемент вагонной тележки, который поддерживает кузов вагона.</p>
+                    <a href="#" class="btn">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>О Нас</h2>
+        <p>Мы - ведущий поставщик запчастей для железнодорожного транспорта. С многолетним опытом, мы предлагаем только проверенные и инновационные продукты.</p>
+        <p>Наша миссия - обеспечивать безопасность и эффективность вашего бизнеса.</p>
+        <p>Мы сотрудничаем с ведущими производителями, чтобы предоставить вам лучшие решения для железнодорожной отрасли.</p>
+    </section>
+
+    <section id="team" class="team">
+        <h2>Наш Коллектив</h2>
+        <div class="team-members">
+            <div class="team-member">
+                <img src="https://i.ibb.co/HTTBn40q/papa.png" alt="Тимофей Аладин">
+                <div class="team-member-content">
+                    <h3>Тимофей Аладин</h3>
+                    <p>Генеральный директор</p>
+                    <p>Опытный лидер с 20-летним стажем в железнодорожной отрасли.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="https://i.ibb.co/f35X6Ls/mama.jpg" alt="Елена Аладина">
+                <div class="team-member-content">
+                    <h3>Елена Аладина</h3>
+                    <p>Заместитель директора</p>
+                    <p>Профессионал с глубоким опытом в железнодорожной отрасли, обеспечивающий операционное управление, координацию подразделений и реализацию стратегических задач компании.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="https://i.ibb.co/GvV2sF7z/ya.jpg" alt="Роман Аладин">
+                <div class="team-member-content">
+                    <h3>Роман Аладин</h3>
+                    <p>Главный программист</p>
+                    <p>Ведущий эксперт с многолетним опытом в разработке ПО для железнодорожной отрасли, отвечает за архитектуру сложных систем, руководство командой разработчиков и внедрение инновационных решений для оптимизации процессов.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <h2>Отзывы Клиентов</h2>
+        <div class="review">
+            <p>"Отличное качество запчастей и быстрая доставка. Рекомендую!"</p>
+            <h4>Олег Сидоров, ООО "ТрансЛогистик"</h4>
+        </div>
+        <div class="review">
+            <p>"Профессиональная команда, всегда готовы помочь с выбором."</p>
+            <h4>Елена Кузнецова, ЗАО "ЖелДор"</h4>
+        </div>
+        <div class="review">
+            <p>"Надежный поставщик, с которым приятно работать."</p>
+            <h4>Дмитрий Васильев, ИП "Васильев"</h4>
+        </div>
+    </section>
+
+    <section id="news" class="news">
+        <h2>Новости и Акции</h2>
+        <div class="news-items">
+            <div class="news-item">
+                <img src="https://www.3dfab.ru/wp-content/uploads/2016/04/brake_12.jpg" alt="Новость 1">
+                <div class="news-content">
+                    <h3>Новые тормозные системы</h3>
+                    <p>Представляем новую линейку тормозных систем с улучшенной эффективностью.</p>
+                    <a href="#" class="btn">Подробнее</a>
+                </div>
+            </div>
+            <div class="news-item">
+                <img src="https://i.pinimg.com/736x/d0/be/32/d0be32b59e23e086ac161beaf279ba05.jpg" alt="Акция">
+                <div class="news-content">
+                    <h3>Скидка 20% на колесные пары</h3>
+                    <p>Только до конца месяца! Успейте заказать по выгодной цене.</p>
+                    <a href="#" class="btn">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Свяжитесь с Нами</h2>
+        <form id="contactForm">
+            <input type="text" placeholder="Ваше Имя" required>
+            <input type="email" placeholder="Ваш Email" required>
+            <textarea placeholder="Ваше Сообщение" rows="5" required></textarea>
+            <button type="submit">Отправить</button>
+        </form>
+    </section>
+
+    <footer>
+        &copy; 2025 Ж/Д Запчасти. Все права защищены.
+    </footer>
+
+    <script>
+        // JavaScript для интерактивности и анимаций
+
+        // Изменение хедера при скролле
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Плавный скролл к секциям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Обработка формы с анимацией
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            form.style.transition = 'opacity 0.5s ease';
+            form.style.opacity = '0';
+            setTimeout(() => {
+                alert('Сообщение отправлено! (Это симуляция)');
+                form.style.opacity = '1';
+                form.reset();
+            }, 500);
+        });
+
+        // Параллакс эффект для герой-секции
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrollPosition = window.pageYOffset;
+            hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+        });
+
+        // Анимация появления карточек, членов команды, отзывов и новостей
+        const elementsToAnimate = document.querySelectorAll('.card, .team-member, .review, .news-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        elementsToAnimate.forEach(element => observer.observe(element));
+
+        // Анимация кнопок при наведении
+        const buttons = document.querySelectorAll('.btn, .full-catalog-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.animation = 'none';
+                setTimeout(() => {
+                    btn.style.animation = 'pulse 2s infinite';
+                }, 10);
+            });
+        });
+
+        // Анимация текста в секции "О нас"
+        const aboutParagraphs = document.querySelectorAll('.about p');
+        const aboutObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideInLeft 0.8s ease forwards';
+                }
+            });
+        }, { threshold: 0.3 });
+
+        aboutParagraphs.forEach(p => aboutObserver.observe(p));
+
+        // Анимация появления футера
+        const footer = document.querySelector('footer');
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    footer.style.animation = 'fadeInUp 1s ease';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        footerObserver.observe(footer);
+    </script>
+</body>
+</html>
